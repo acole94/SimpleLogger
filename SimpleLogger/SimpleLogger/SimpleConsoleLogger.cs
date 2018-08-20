@@ -252,6 +252,7 @@ namespace SimpleLogger
             var parentTestResult = GetTestResult(parentExecutionId);
             var parentTestElement = (parentTestResult != null) ? GetTestElement(parentTestResult.Id.TestId) : null;
 
+            // Retrieve Ticket number if it exists
             var ticketNumber = "";
             if (Converter.GetTicketNumber(e.Result.TestCase) != null)
             {
@@ -274,7 +275,7 @@ namespace SimpleLogger
             UpdateTestLinks(testElement, parentTestElement);
 
             // Convert the rocksteady result to trx test result
-            var testResult = CreateTestResult(executionId, parentExecutionId, testType, testElement, parentTestElement, parentTestResult, e.Result);
+            var testResult = CreateTestResult(executionId, parentExecutionId, testType, testElement, parentTestElement, parentTestResult, e.Result, ticketNumber);
 
             // Update test entries
             UpdateTestEntries(executionId, parentExecutionId, testElement, parentTestElement);
@@ -613,14 +614,15 @@ namespace SimpleLogger
         /// <param name="parentTestElement"></param>
         /// <param name="parentTestResult"></param>
         /// <param name="rocksteadyTestResult"></param>
+        /// <param name="ticketNumber"></param>
         /// <returns>Trx test result</returns>
         private ITestResult CreateTestResult(Guid executionId, Guid parentExecutionId, TestType testType,
-            ITestElement testElement, ITestElement parentTestElement, ITestResult parentTestResult, Microsoft.VisualStudio.TestPlatform.ObjectModel.TestResult rocksteadyTestResult)
+            ITestElement testElement, ITestElement parentTestElement, ITestResult parentTestResult, Microsoft.VisualStudio.TestPlatform.ObjectModel.TestResult rocksteadyTestResult, string ticketNumber)
         {
             // Create test result
             TrxLoggerObjectModel.TestOutcome testOutcome = Converter.ToOutcome(rocksteadyTestResult.Outcome);
             var testResult = Converter.ToTestResult(testElement.Id.Id, executionId, parentExecutionId, testElement.Name,
-                this.testResultsDirPath, testType, testElement.CategoryId, testOutcome, this.testRun, rocksteadyTestResult);
+                this.testResultsDirPath, ticketNumber, testType, testElement.CategoryId, testOutcome, this.testRun, rocksteadyTestResult);
 
             // Normal result scenario
             if (parentTestResult == null)

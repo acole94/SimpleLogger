@@ -18,6 +18,7 @@ namespace SimpleLogger.ObjectModel
         string ErrorMessage { get; set; }
         string ErrorStackTrace { get; set; }
         string ComputerName { get; }
+        string TicketNumber { get; set; }
         string[] TextMessages { get; set; }
         int DataRowInfo { get; set; }
         DateTime StartTime { get; set; }

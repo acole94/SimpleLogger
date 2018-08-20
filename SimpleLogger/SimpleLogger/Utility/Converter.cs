@@ -66,6 +66,7 @@ namespace SimpleLogger.Utility
         /// <param name="parentExecutionId"></param>
         /// <param name="testName"></param>
         /// <param name="trxFileDirectory"></param>
+        /// <param name="ticketNumber"></param>
         /// <param name="testType"></param>
         /// <param name="testCategoryId"></param>
         /// <param name="testOutcome"></param>
@@ -78,6 +79,7 @@ namespace SimpleLogger.Utility
             Guid parentExecutionId,
             string testName,
             string trxFileDirectory,
+            string ticketNumber,
             TestType testType,
             TestListCategoryId testCategoryId,
             TrxObjectModel.TestOutcome testOutcome,
@@ -85,7 +87,7 @@ namespace SimpleLogger.Utility
             ObjectModel.TestResult rockSteadyTestResult)
         {
             var resultName = !string.IsNullOrEmpty(rockSteadyTestResult.DisplayName) ? rockSteadyTestResult.DisplayName : testName;
-            var testResult = CreateTestResult(testRun.Id, testId, executionId, parentExecutionId, resultName, Environment.MachineName, testOutcome, testType, testCategoryId);
+            var testResult = CreateTestResult(testRun.Id, testId, executionId, parentExecutionId, resultName, Environment.MachineName, ticketNumber, testOutcome, testType, testCategoryId);
 
             if (rockSteadyTestResult.ErrorMessage != null)
                 testResult.ErrorMessage = rockSteadyTestResult.ErrorMessage;
@@ -720,6 +722,7 @@ namespace SimpleLogger.Utility
         /// <param name="parentExecutionId"></param>
         /// <param name="resultName"></param>
         /// <param name="computerName"></param>
+        /// <param name="ticketNumber"></param>
         /// <param name="outcome"></param>
         /// <param name="testType"></param>
         /// <param name="testCategoryId"></param>
@@ -731,13 +734,14 @@ namespace SimpleLogger.Utility
             Guid parentExecutionId,
             string resultName,
             string computerName,
+            string ticketNumber,
             TrxObjectModel.TestOutcome outcome,
             TestType testType,
             TestListCategoryId testCategoryId)
         {
             return testType.Equals(Constants.OrderedTestType) ?
-                new TestResultAggregation(runId, testId, executionId, parentExecutionId, resultName, Environment.MachineName, outcome, testType, testCategoryId) :
-                new UnitTestResult(runId, testId, executionId, parentExecutionId, resultName, Environment.MachineName, outcome, testType, testCategoryId);
+                new TestResultAggregation(runId, testId, executionId, parentExecutionId, resultName, Environment.MachineName, ticketNumber, outcome, testType, testCategoryId) :
+                new UnitTestResult(runId, testId, executionId, parentExecutionId, resultName, Environment.MachineName, ticketNumber, outcome, testType, testCategoryId);
         }
 
     }

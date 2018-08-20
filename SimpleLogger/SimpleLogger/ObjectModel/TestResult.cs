@@ -224,6 +224,7 @@ namespace SimpleLogger.ObjectModel
         private TestResultId id;
         private string resultName;
         private string computerInfo;
+        private string ticketNumber;
         private string stdOut;
         private string stdErr;
         private string debugTrace;
@@ -280,6 +281,7 @@ namespace SimpleLogger.ObjectModel
             Guid parentExecutionId,
             string resultName,
             string computerName,
+            string ticketNumber,
             TestOutcome outcome,
             TestType testType,
             TestListCategoryId testCategoryId)
@@ -294,6 +296,7 @@ namespace SimpleLogger.ObjectModel
             this.resultName = resultName;
             this.testType = testType;
             this.computerInfo = computerName;
+            this.ticketNumber = ticketNumber;
             this.outcome = outcome;
             this.categoryId = testCategoryId;
             this.relativeTestResultsDirectory = TestRunDirectories.GetRelativeTestResultsDirectory(executionId);
@@ -345,6 +348,12 @@ namespace SimpleLogger.ObjectModel
         public string ComputerName
         {
             get { return this.computerInfo; }
+        }
+
+        public string TicketNumber
+        {
+            get { return this.ticketNumber; }
+            set { this.ticketNumber = value; }
         }
 
         /// <summary>
@@ -577,6 +586,7 @@ namespace SimpleLogger.ObjectModel
             helper.SaveObject(this.id, element, ".", parameters);
             helper.SaveSimpleField(element, "@testName", this.resultName, string.Empty);
             helper.SaveSimpleField(element, "@computerName", this.computerInfo, string.Empty);
+            helper.SaveSimpleField(element, "@ticketNumber", this.ticketNumber, string.Empty);
             helper.SaveSimpleField(element, "@duration", this.duration, default(TimeSpan));
             helper.SaveSimpleField(element, "@startTime", this.startTime, default(DateTime));
             helper.SaveSimpleField(element, "@endTime", this.endTime, default(DateTime));

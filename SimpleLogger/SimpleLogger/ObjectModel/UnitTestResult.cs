@@ -17,8 +17,9 @@ namespace SimpleLogger.ObjectModel
             Guid parentExecutionId,
             string resultName,
             string computerName,
+            string ticketNumber,
             TestOutcome outcome,
             TestType testType,
-            TestListCategoryId testCategoryId) : base(runId, testId, executionId, parentExecutionId, resultName, computerName, outcome, testType, testCategoryId) { }
+            TestListCategoryId testCategoryId) : base(runId, testId, executionId, parentExecutionId, resultName, computerName, ticketNumber, outcome, testType, testCategoryId) { }
     }
 }
