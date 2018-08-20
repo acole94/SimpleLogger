@@ -16,6 +16,7 @@ namespace SimpleLogger.Utility
     using ObjectModel = Microsoft.VisualStudio.TestPlatform.ObjectModel;
     using TrxLoggerResources = SimpleLogger.Resources.TrxResource;
     using TrxObjectModel = SimpleLogger.ObjectModel;
+    using System.Collections;
 
     /// <summary>
     /// The converter class.
@@ -275,6 +276,32 @@ namespace SimpleLogger.Utility
             }
 
             return Enumerable.Empty<String>().ToList();
+        }
+
+        /// <summary>
+        ///  Get Custom property values from test cases.
+        /// </summary>
+        /// <param name="testCase">TestCase object extracted from the TestResult</param>
+        /// <returns> list of properties</returns>
+        public static List<string> GetTicketNumber(ObjectModel.TestCase testCase)
+        {
+            var properties = testCase.GetProperties();
+            List<string> ticketNumber = new List<string>();
+            foreach (var propertyGroup in properties)
+            {
+                if (testCase.GetPropertyValue(propertyGroup.Key) is KeyValuePair<String, String>[])
+                {
+                    KeyValuePair<String, String>[] kvparr = ((IEnumerable)testCase.GetPropertyValue(propertyGroup.Key)).Cast<object>()
+                             .Select(x => (KeyValuePair<String, String>)x)
+                             .ToArray();
+                    foreach (KeyValuePair<String, String> property in kvparr)
+                    {
+                        if (property.Key == "TicketNumber")
+                            ticketNumber.Add(property.Value);
+                    }
+                }
+            }
+            return ticketNumber;
         }
 
         /// <summary>

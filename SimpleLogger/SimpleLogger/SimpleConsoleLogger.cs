@@ -252,6 +252,8 @@ namespace SimpleLogger
             var parentTestResult = GetTestResult(parentExecutionId);
             var parentTestElement = (parentTestResult != null) ? GetTestElement(parentTestResult.Id.TestId) : null;
 
+            
+
             // Switch to flat test results in case any parent related information is missing.
             if (parentTestResult == null || parentTestElement == null || parentExecutionId == Guid.Empty)
             {
