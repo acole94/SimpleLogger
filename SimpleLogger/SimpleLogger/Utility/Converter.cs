@@ -300,6 +300,11 @@ namespace SimpleLogger.Utility
                             ticketNumber.Add(property.Value);
                     }
                 }
+                
+            }
+            if(ticketNumber.Count == 0)
+            {
+                return null;
             }
             return ticketNumber;
         }

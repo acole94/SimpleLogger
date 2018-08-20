@@ -252,8 +252,13 @@ namespace SimpleLogger
             var parentTestResult = GetTestResult(parentExecutionId);
             var parentTestElement = (parentTestResult != null) ? GetTestElement(parentTestResult.Id.TestId) : null;
 
-            
+            var ticketNumber = "";
+            if (Converter.GetTicketNumber(e.Result.TestCase) != null)
+            {
+                ticketNumber = Converter.GetTicketNumber(e.Result.TestCase)[0];
+            }
 
+            Console.WriteLine("Number: " + ticketNumber);
             // Switch to flat test results in case any parent related information is missing.
             if (parentTestResult == null || parentTestElement == null || parentExecutionId == Guid.Empty)
             {
